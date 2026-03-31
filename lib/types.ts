@@ -107,3 +107,19 @@ export type GifAnimalConfig = {
     /** Movement behaviours the pet can randomly perform while walking */
     movementActions: GifMovementAction[];
 };
+
+export type MediaAnimal = {
+    name: string;
+    logoUrl: string;
+};
+
+export type MediaAnimalVariant = {
+    color: string;
+    action: string;
+    fps: number;
+    gifUrl: string;
+};
+
+export type MediaAnimalWithVariants = MediaAnimal & {
+    variants: MediaAnimalVariant[];
+};

@@ -3,7 +3,7 @@ import type { GifAnimalConfig } from "../types";
 const foxRed: GifAnimalConfig = {
     name: "fox-red",
     spriteSize: { w: 92, h: 75 },
-    scale: 1.5,
+    scale: 0.5,
     speed: 4.5,
     idleDist: 48,
     hoverAction: "with_ball",
