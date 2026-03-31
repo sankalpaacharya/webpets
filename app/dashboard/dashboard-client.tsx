@@ -1,8 +1,32 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import type { MediaAnimalWithVariants } from "@/lib/types";
+import { GifPet } from "@/components/gif-pet";
+import bear from "@/lib/animals/bear";
+import cat from "@/lib/animals/cat";
+import chickenBrown from "@/lib/animals/chicken-brown";
+import clippyBlack from "@/lib/animals/clippy-black";
+import cockatielBrown from "@/lib/animals/cockatiel-brown";
+import crabRed from "@/lib/animals/crab-red";
+import deno from "@/lib/animals/deno";
+import dogAkita from "@/lib/animals/dog-akita";
+import foxRed from "@/lib/animals/fox-red";
+import horseBlack from "@/lib/animals/horse-black";
+import modPurple from "@/lib/animals/mod-purple";
+import monkeyGray from "@/lib/animals/monkey-gray";
+import morphPurple from "@/lib/animals/morph-purple";
+import pandaBlack from "@/lib/animals/panda-black";
+import ratBrown from "@/lib/animals/rat-brown";
+import rockyGray from "@/lib/animals/rocky-gray";
+import rubberDuckYellow from "@/lib/animals/rubber-duck-yellow";
+import skeletonBlue from "@/lib/animals/skeleton-blue";
+import snailBrown from "@/lib/animals/snail-brown";
+import snakeGreen from "@/lib/animals/snake-green";
+import totoroGray from "@/lib/animals/totoro-gray";
+import turtleGreen from "@/lib/animals/turtle-green";
+import zappyYellow from "@/lib/animals/zappy-yellow";
+import type { GifAnimalConfig, MediaAnimalWithVariants } from "@/lib/types";
 
 type DashboardClientProps = {
   animals: MediaAnimalWithVariants[];
@@ -11,6 +35,32 @@ type DashboardClientProps = {
 function getUniqueSorted(values: string[]) {
   return Array.from(new Set(values)).sort((a, b) => a.localeCompare(b));
 }
+
+const petPreviewConfigs: Record<string, GifAnimalConfig> = {
+  bear,
+  cat,
+  chicken: chickenBrown,
+  clippy: clippyBlack,
+  cockatiel: cockatielBrown,
+  crab: crabRed,
+  deno,
+  dog: dogAkita,
+  fox: foxRed,
+  horse: horseBlack,
+  mod: modPurple,
+  monkey: monkeyGray,
+  morph: morphPurple,
+  panda: pandaBlack,
+  rat: ratBrown,
+  rocky: rockyGray,
+  "rubber-duck": rubberDuckYellow,
+  skeleton: skeletonBlue,
+  snail: snailBrown,
+  snake: snakeGreen,
+  totoro: totoroGray,
+  turtle: turtleGreen,
+  zappy: zappyYellow,
+};
 
 export default function DashboardClient({ animals }: DashboardClientProps) {
   const initialVariant = animals[0]?.variants[0];
@@ -23,6 +73,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
   const [selectedAction, setSelectedAction] = useState(
     initialVariant?.action ?? "",
   );
+  const [isPetPreviewOpen, setIsPetPreviewOpen] = useState(false);
 
   const selectedAnimal =
     animals.find((animal) => animal.name === selectedAnimalName) ?? null;
@@ -49,6 +100,24 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
     variants[0];
 
   const hasVariants = variants.length > 0;
+  const petPreviewConfig =
+    (selectedAnimalName
+      ? petPreviewConfigs[selectedAnimalName]
+      : undefined) ?? null;
+  const petPreviewScale = 0.6;
+  const petPreviewDisplayConfig = petPreviewConfig
+    ? {
+        ...petPreviewConfig,
+        scale: (petPreviewConfig.scale ?? 1) * petPreviewScale,
+      }
+    : null;
+  const canPreviewPet = Boolean(petPreviewConfig);
+
+  useEffect(() => {
+    if (!canPreviewPet) {
+      setIsPetPreviewOpen(false);
+    }
+  }, [canPreviewPet]);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-900">
@@ -198,9 +267,23 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
                     </div>
 
                     <div className="rounded-3xl border border-slate-200 bg-white/80 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-                      <p className="text-xs uppercase tracking-[0.28em] text-slate-500">
-                        Preview
-                      </p>
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <p className="text-xs uppercase tracking-[0.28em] text-slate-500">
+                          Preview
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setIsPetPreviewOpen((prev) => !prev)}
+                          disabled={!canPreviewPet}
+                          className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] transition ${
+                            canPreviewPet
+                              ? "border-slate-900/60 bg-slate-900 text-white"
+                              : "border-slate-200 bg-slate-100 text-slate-400"
+                          }`}
+                        >
+                          {isPetPreviewOpen ? "Hide pet" : "Preview pet"}
+                        </button>
+                      </div>
                       <div className="mt-4 flex min-h-[240px] items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white">
                         {previewVariant ? (
                           <img
@@ -216,8 +299,14 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
                       </div>
                       {previewVariant ? (
                         <p className="mt-3 text-xs text-slate-500">
-                          {previewVariant.color} / {previewVariant.action} / {previewVariant.fps}
+                          {previewVariant.color} / {previewVariant.action} /{" "}
+                          {previewVariant.fps}
                           fps
+                        </p>
+                      ) : null}
+                      {!canPreviewPet ? (
+                        <p className="mt-2 text-xs text-slate-400">
+                          Sprite preview not available for this animal.
                         </p>
                       ) : null}
                     </div>
@@ -246,6 +335,10 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
           </main>
         </section>
       </div>
+
+      {isPetPreviewOpen && petPreviewDisplayConfig ? (
+        <GifPet config={petPreviewDisplayConfig} />
+      ) : null}
     </div>
   );
 }
