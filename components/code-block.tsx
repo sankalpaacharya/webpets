@@ -9,14 +9,14 @@ import {
 } from "react";
 import type { BundledLanguage } from "shiki";
 import { codeToHtml } from "shiki";
-import {
-  Copy01Icon,
-  File01Icon,
-  Tick01Icon,
-} from "@hugeicons/core-free-icons";
+import { Copy01Icon, File01Icon, Tick01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 type CodeBlockContextType = {
@@ -75,6 +75,7 @@ type CodeBlockProps = {
   code: string;
   lang: BundledLanguage;
   title?: string;
+  header?: React.ReactNode;
   className?: string;
   theme?: string;
 };
@@ -83,6 +84,7 @@ export function CodeBlock({
   code,
   lang,
   title,
+  header,
   className,
   theme = "github-dark",
 }: CodeBlockProps) {
@@ -117,7 +119,14 @@ export function CodeBlock({
           className,
         )}
       >
-        {title ? (
+        {header ? (
+          <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-muted/40 px-4 py-2">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              {header}
+            </div>
+            <CodeBlockCopyButton />
+          </div>
+        ) : title ? (
           <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-muted/40 px-4 py-2">
             <div className="flex items-center gap-2 text-muted-foreground">
               <HugeiconsIcon icon={File01Icon} size={16} />
