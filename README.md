@@ -11,9 +11,7 @@ Tiny, friendly web pets you can drop into any site. Pick a character, set the vi
 
 ## Showcase
 
-| Portfolio | Inside React | Web pets |
-| --- | --- | --- |
-| <img src="/images/showcase.gif" alt="Portfolio showcase" width="320" /> | <img src="/images/showcase1.gif" alt="Inside React showcase" width="320" /> | <img src="/images/showcase2.gif" alt="Web pets showcase" width="320" /> |
+<img src="/images/showcase2.gif" alt="Web pets showcase" width="720" />
 
 ## Quick Start
 
