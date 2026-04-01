@@ -115,15 +115,16 @@ export function useGifPetAnimation(
             lastStepTime.current = ts;
             let { x } = animalPos.current;
             const rect = ref.current?.getBoundingClientRect();
-            const parentWidth =
-                ref.current?.parentElement?.getBoundingClientRect().width ??
-                window.innerWidth;
+            const parentRect =
+                ref.current?.parentElement?.getBoundingClientRect() ??
+                ({ left: 0, width: window.innerWidth } as DOMRect);
+            const parentWidth = parentRect.width;
             const spriteWidth = rect?.width ?? activeConfig.spriteSize.w;
 
             let targetX: number;
 
             if (followMouse) {
-                targetX = mousePos.current.x;
+                targetX = mousePos.current.x - parentRect.left;
             } else {
                 if (ts < movementPauseUntil.current) {
                     targetX = x;

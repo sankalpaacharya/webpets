@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 export function SiteNavbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
-      <GifPet animal="deno" color="green" />
+      <GifPet animal="deno" color="green" followMouse={true} />
       <GifPet animal="dog" color="red" />
       <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-6 py-4">
         <div className="flex items-center gap-3">

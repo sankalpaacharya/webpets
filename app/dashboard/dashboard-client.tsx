@@ -11,7 +11,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/8bit/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/8bit/select";
 import { Slider } from "@/components/ui/8bit/slider";
+import { Switch } from "@/components/ui/8bit/switch";
 import { getGifPetSpeed } from "@/lib/gif-pet-speeds";
 import type { MediaAnimalWithVariants } from "@/lib/types";
 
@@ -29,6 +37,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
   );
   const [scale, setScale] = useState(0.5);
   const [speed, setSpeed] = useState(baseSpeed);
+  const [followMouse, setFollowMouse] = useState(false);
   const selectedAnimal = useMemo(
     () => animals.find((animal) => animal.name === selectedAnimalName) ?? null,
     [animals, selectedAnimalName],
@@ -110,6 +119,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
                     color={selectedColor}
                     speed={speed}
                     scale={scale}
+                    followMouse={followMouse}
                     position="absolute"
                   />
                 ) : null}
@@ -146,18 +156,32 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
                   </label>
                   <label className="flex flex-col gap-2">
                     <span className="font-medium text-foreground">Color</span>
-                    <select
+                    <Select
                       value={selectedColor}
-                      onChange={(event) => setSelectedColor(event.target.value)}
-                      className="w-full rounded-xl border border-border bg-input px-3 py-2 text-sm text-foreground shadow-sm"
+                      onValueChange={(value) => setSelectedColor(value)}
                     >
-                      {availableColors.map((color) => (
-                        <option key={color} value={color}>
-                          {color}
-                        </option>
-                      ))}
-                    </select>
+                      <SelectTrigger className="text-sm">
+                        <SelectValue placeholder="Select color" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableColors.map((color) => (
+                          <SelectItem key={color} value={color}>
+                            {color}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </label>
+                  <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-3 py-2">
+                    <span className="font-medium text-foreground">
+                      Follow mouse
+                    </span>
+                    <Switch
+                      checked={followMouse}
+                      onCheckedChange={setFollowMouse}
+                      aria-label="Follow mouse"
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </aside>

@@ -33,12 +33,14 @@ export function GifPet({
   position = "fixed",
   speed,
   scale,
+  followMouse = false,
 }: {
   animal: string;
   color?: string;
   position?: "fixed" | "absolute";
   speed?: number;
   scale?: number;
+  followMouse?: boolean;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const config: GifAnimalConfig = {
@@ -55,12 +57,11 @@ export function GifPet({
     speed: speed ?? getGifPetSpeed(animal, DEFAULT_GIF_PET.speed),
     scale: scale ?? DEFAULT_GIF_PET.scale,
     spriteSize: DEFAULT_GIF_PET.spriteSize,
-    followMouse: DEFAULT_GIF_PET.followMouse,
+    followMouse,
   };
 
   useGifPetAnimation(ref, config, color);
   const initialGif = getGifUrl(config, config.hoverAction, color);
-
   return (
     <div
       ref={ref}
