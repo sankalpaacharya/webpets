@@ -178,7 +178,7 @@ body {
 
 body {
   font-family: var(--font-pixel), sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 @keyframes dashboard-fade {
