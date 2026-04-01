@@ -11,7 +11,7 @@ Tiny, friendly web pets you can drop into any site. Pick a character, set the vi
 
 ## Showcase
 
-<img src="/images/showcase2.gif" alt="Web pets showcase" />
+<img src="./public/images/showcase2.gif" alt="Web pets showcase" />
 
 ## Quick Start
 
