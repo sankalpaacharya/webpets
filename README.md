@@ -15,8 +15,8 @@ Tiny, friendly web pets you can drop into any site. Pick a character, set the vi
 ## Quick Start
 
 ```bash
-npm install
-npm run dev
+bun install
+bun  dev
 ```
 
 Open http://localhost:3000 to view the landing page.
