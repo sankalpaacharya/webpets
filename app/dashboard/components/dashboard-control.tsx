@@ -1,6 +1,19 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/8bit/card";
+import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  Tick02Icon,
+  UnfoldMoreIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/8bit/card";
 import {
   Select,
   SelectContent,
@@ -37,14 +50,17 @@ export function ControlsPanel({
   onFollowMouseChange,
 }: ControlsPanelProps) {
   return (
-    <aside className="dashboard-enter space-y-4 text-sm text-muted-foreground">
+    <aside className="dashboard-enter space-y-5 text-sm text-muted-foreground">
       <Card>
         <CardHeader>
           <CardTitle>Controls</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-5">
           <label className="flex flex-col gap-2">
-            <span className="font-medium text-foreground">Speed</span>
+            <span className="flex items-center gap-2 font-medium text-foreground">
+              <HugeiconsIcon icon={ArrowUp01Icon} size={16} />
+              Speed
+            </span>
             <Slider
               min={1}
               max={8}
@@ -55,7 +71,10 @@ export function ControlsPanel({
             <span className="text-xs">{speed.toFixed(1)} px/tick</span>
           </label>
           <label className="flex flex-col gap-2">
-            <span className="font-medium text-foreground">Scale</span>
+            <span className="flex items-center gap-2 font-medium text-foreground">
+              <HugeiconsIcon icon={ArrowDown01Icon} size={16} />
+              Scale
+            </span>
             <Slider
               min={0.3}
               max={1.5}
@@ -66,7 +85,10 @@ export function ControlsPanel({
             <span className="text-xs">{scale.toFixed(2)}x</span>
           </label>
           <label className="flex flex-col gap-2">
-            <span className="font-medium text-foreground">Color</span>
+            <span className="flex items-center gap-2 font-medium text-foreground">
+              <HugeiconsIcon icon={UnfoldMoreIcon} size={16} />
+              Color
+            </span>
             <Select value={selectedColor} onValueChange={onColorChange}>
               <SelectTrigger className="text-sm">
                 <SelectValue placeholder="Select color" />
@@ -81,7 +103,10 @@ export function ControlsPanel({
             </Select>
           </label>
           <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-3 py-2">
-            <span className="font-medium text-foreground">Follow mouse</span>
+            <span className="flex items-center gap-2 font-medium text-foreground">
+              <HugeiconsIcon icon={Tick02Icon} size={16} />
+              Follow mouse
+            </span>
             <Switch
               checked={followMouse}
               onCheckedChange={onFollowMouseChange}

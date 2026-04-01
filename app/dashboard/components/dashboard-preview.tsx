@@ -3,6 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Highlighter } from "shiki";
 
+import { ClipboardIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { WebPet } from "@/components/web-pet";
 import { Button } from "@/components/ui/button";
 import {
@@ -132,6 +135,7 @@ export function PreviewPanel({
                 className="px-4"
                 onClick={handleCopy}
               >
+                <HugeiconsIcon icon={ClipboardIcon} size={16} />
                 {copyState === "copied" ? "Copied" : "Copy"}
               </Button>
             </div>

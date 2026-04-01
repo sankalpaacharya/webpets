@@ -9,7 +9,11 @@ import {
 } from "react";
 import type { BundledLanguage } from "shiki";
 import { codeToHtml } from "shiki";
-import { Copy01Icon, File01Icon, Tick01Icon } from "@hugeicons/core-free-icons";
+import {
+  ClipboardIcon,
+  File01Icon,
+  Tick01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import {
@@ -61,7 +65,7 @@ export function CodeBlockCopyButton({ className }: CodeBlockCopyButtonProps) {
         {copied ? (
           <HugeiconsIcon icon={Tick01Icon} size={18} />
         ) : (
-          <HugeiconsIcon icon={Copy01Icon} size={18} />
+          <HugeiconsIcon icon={ClipboardIcon} size={18} />
         )}
       </TooltipTrigger>
       <TooltipContent>

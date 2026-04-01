@@ -6,7 +6,8 @@ import { AnimalSidebar } from "@/app/dashboard/components/dashboard-sidebar";
 import { ControlsPanel } from "@/app/dashboard/components/dashboard-control";
 import { PreviewPanel } from "@/app/dashboard/components/dashboard-preview";
 import { InstallSnippet } from "@/app/dashboard/components/install-snippet";
-import { getWebPetSpeed } from "@/components/web-pet";
+import { getWebPetSpeed, WEB_PET_ACTIONS } from "@/components/web-pet";
+import Link from "next/link";
 import type { MediaAnimalWithVariants } from "@/lib/types";
 
 type DashboardClientProps = {
@@ -48,10 +49,10 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
   }, [baseSpeed]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
-      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-6 px-6 py-8">
+    <div className="relative h-[calc(100vh-4rem)] overflow-y-auto bg-background text-foreground">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-10">
         <section className="flex-1">
-          <div className="grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)_280px]">
+          <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)_320px] lg:items-start">
             <AnimalSidebar
               animals={animals}
               selectedAnimalName={selectedAnimalName}
@@ -65,20 +66,32 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
                 scale={scale}
                 followMouse={followMouse}
               />
-              <InstallSnippet />
+              <InstallSnippet
+                animal={selectedAnimalName}
+                color={selectedColor}
+                actions={WEB_PET_ACTIONS}
+              />
+              <Link
+                href={"/docs"}
+                className="underline text-sm text-muted-foreground"
+              >
+                How to setup?
+              </Link>
             </div>
-            <ControlsPanel
-              speed={speed}
-              scale={scale}
-              baseSpeed={baseSpeed}
-              selectedColor={selectedColor}
-              availableColors={availableColors}
-              followMouse={followMouse}
-              onSpeedChange={setSpeed}
-              onScaleChange={setScale}
-              onColorChange={setSelectedColor}
-              onFollowMouseChange={setFollowMouse}
-            />
+            <div className="space-y-6">
+              <ControlsPanel
+                speed={speed}
+                scale={scale}
+                baseSpeed={baseSpeed}
+                selectedColor={selectedColor}
+                availableColors={availableColors}
+                followMouse={followMouse}
+                onSpeedChange={setSpeed}
+                onScaleChange={setScale}
+                onColorChange={setSelectedColor}
+                onFollowMouseChange={setFollowMouse}
+              />
+            </div>
           </div>
         </section>
       </div>

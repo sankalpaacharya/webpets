@@ -61,6 +61,8 @@ const DEFAULT_WEB_PET = {
   followMouse: false,
 } satisfies Omit<WebPetConfig, "name" | "mediaFolder" | "defaultColor">;
 
+export const WEB_PET_ACTIONS = DEFAULT_WEB_PET.actions;
+
 const WEB_PET_SPEEDS: Record<string, number> = {
   bear: 3.9,
   cat: 4.6,

@@ -20,12 +20,15 @@ export function SiteNavbar() {
             href="/"
             className="text-sm font-semibold text-foreground transition hover:text-foreground"
           >
-            WebPet
+            WebPets
           </Link>
         </div>
         <nav className="hidden flex-1 items-center gap-4 text-xs text-muted-foreground sm:flex">
           <Link href="/playground" className="transition hover:text-foreground">
             Playground
+          </Link>
+          <Link href="/docs" className="transition hover:text-foreground">
+            Docs
           </Link>
           <Link href="/credits" className="transition hover:text-foreground">
             Credits
@@ -63,6 +66,9 @@ export function SiteNavbar() {
         >
           <Link href="/playground" className="transition hover:text-foreground">
             Playground
+          </Link>
+          <Link href="/docs" className="transition hover:text-foreground">
+            Docs
           </Link>
           <Link href="/credits" className="transition hover:text-foreground">
             Credits
