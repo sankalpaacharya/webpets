@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { GifPet } from "./gif-pet";
+import { WebPet } from "./web-pet";
 import { Button } from "./ui/button";
 
 export function SiteNavbar() {
@@ -12,8 +12,8 @@ export function SiteNavbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
-      <GifPet animal="deno" color="green" followMouse={true} />
-      <GifPet animal="dog" color="red" />
+      <WebPet animal="deno" color="green" followMouse={true} />
+      <WebPet animal="dog" color="red" />
       <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-6 py-4">
         <div className="flex items-center gap-3">
           <Link
@@ -36,7 +36,7 @@ export function SiteNavbar() {
             <ThemeToggle />
             <Button asChild variant="outline" className="text-xs">
               <Link
-                href="https://github.com/sankalpaacharya/webpet"
+                href="https://github.com/sankalpaacharya/webpets"
                 target="_blank"
                 rel="noreferrer"
               >

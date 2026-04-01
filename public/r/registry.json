@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "webpet",
+  "homepage": "https://example.com",
+  "items": [
+    {
+      "name": "web-pet",
+      "type": "registry:component",
+      "title": "WebPet",
+      "description": "Plug-and-play animated web pet.",
+      "files": [
+        {
+          "path": "components/web-pet.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

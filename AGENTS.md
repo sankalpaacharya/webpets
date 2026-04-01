@@ -1,1 +1,1 @@
-<!-- BEGIN:nextjs-agent-rules -->
+Listen to sanku!

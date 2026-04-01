@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GifPet } from "@/components/gif-pet";
+import { WebPet } from "@/components/web-pet";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -34,7 +34,9 @@ export default function Home() {
               variant="outline"
               size="lg"
               className="rounded-full"
-            ></Button>
+            >
+              <Link href="#features">See what's inside</Link>
+            </Button>
           </div>
           <div className="flex flex-wrap justify-center gap-4 text-xs uppercase tracking-[0.2em] text-muted-foreground">
             <span>pixel-perfect sprites</span>
@@ -46,8 +48,8 @@ export default function Home() {
         <div id="features" className="dashboard-card" />
       </div>
 
-      <GifPet animal="horse" color="magical" />
-      <GifPet animal="panda" color="black" />
+      <WebPet animal="horse" color="magical" />
+      <WebPet animal="panda" color="black" />
     </div>
   );
 }

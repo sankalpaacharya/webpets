@@ -6,7 +6,7 @@ import { AnimalSidebar } from "@/app/dashboard/components/dashboard-sidebar";
 import { ControlsPanel } from "@/app/dashboard/components/dashboard-control";
 import { PreviewPanel } from "@/app/dashboard/components/dashboard-preview";
 import { InstallSnippet } from "@/app/dashboard/components/install-snippet";
-import { getGifPetSpeed } from "@/lib/gif-pet-speeds";
+import { getWebPetSpeed } from "@/components/web-pet";
 import type { MediaAnimalWithVariants } from "@/lib/types";
 
 type DashboardClientProps = {
@@ -18,7 +18,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
     animals[0]?.name ?? "",
   );
   const baseSpeed = useMemo(
-    () => getGifPetSpeed(selectedAnimalName ?? "", 4.5),
+    () => getWebPetSpeed(selectedAnimalName ?? "", 4.5),
     [selectedAnimalName],
   );
   const [scale, setScale] = useState(0.5);

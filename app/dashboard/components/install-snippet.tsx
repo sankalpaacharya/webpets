@@ -3,11 +3,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/code-block";
 
+const registryUrl = "./registry.json";
+
 const installCommands = {
-  pnpm: "pnpm add webpet",
-  npm: "npm install webpet",
-  yarn: "yarn add webpet",
-  bun: "bun add webpet",
+  pnpm: `pnpm dlx shadcn@latest add web-pet --registry ${registryUrl}`,
+  npm: `npx shadcn@latest add web-pet --registry ${registryUrl}`,
+  yarn: `yarn dlx shadcn@latest add web-pet --registry ${registryUrl}`,
+  bun: `bunx --bun shadcn@latest add web-pet --registry ${registryUrl}`,
 };
 
 const installTabsHeader = (

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Highlighter } from "shiki";
 
-import { GifPet } from "@/components/gif-pet";
+import { WebPet } from "@/components/web-pet";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -41,7 +41,7 @@ export function PreviewPanel({
       props.push("followMouse");
     }
 
-    return `import { GifPet } from "@/components/gif-pet";\n\n<GifPet\n  ${props.join(
+    return `import { WebPet } from "@/components/web-pet";\n\n<WebPet\n  ${props.join(
       "\n  ",
     )}\n/>`;
   }, [animal, color, speed, scale, followMouse]);
@@ -113,7 +113,7 @@ export function PreviewPanel({
             />
             <div className="relative flex h-full items-end justify-center">
               {animal ? (
-                <GifPet
+                <WebPet
                   animal={animal}
                   color={color}
                   speed={speed}
