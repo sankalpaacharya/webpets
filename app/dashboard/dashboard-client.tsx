@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimalSidebar } from "@/app/dashboard/components/dashboard-sidebar";
 import { ControlsPanel } from "@/app/dashboard/components/dashboard-control";
 import { PreviewPanel } from "@/app/dashboard/components/dashboard-preview";
+import { InstallSnippet } from "@/app/dashboard/components/install-snippet";
 import { getGifPetSpeed } from "@/lib/gif-pet-speeds";
 import type { MediaAnimalWithVariants } from "@/lib/types";
 
@@ -56,13 +57,16 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
               selectedAnimalName={selectedAnimalName}
               onSelect={setSelectedAnimalName}
             />
-            <PreviewPanel
-              animal={selectedAnimalName}
-              color={selectedColor}
-              speed={speed}
-              scale={scale}
-              followMouse={followMouse}
-            />
+            <div className="space-y-6">
+              <PreviewPanel
+                animal={selectedAnimalName}
+                color={selectedColor}
+                speed={speed}
+                scale={scale}
+                followMouse={followMouse}
+              />
+              <InstallSnippet />
+            </div>
             <ControlsPanel
               speed={speed}
               scale={scale}

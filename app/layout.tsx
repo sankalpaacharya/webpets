@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNavbar } from "@/components/navbar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -64,7 +65,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SiteNavbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            <TooltipProvider>{children}</TooltipProvider>
+          </main>
         </ThemeProvider>
       </body>
     </html>
