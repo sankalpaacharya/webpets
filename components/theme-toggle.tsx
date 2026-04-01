@@ -1,33 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/8bit/button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Moon02Icon, Sun01Icon } from "@hugeicons/core-free-icons";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const isDark = useMemo(() => resolvedTheme === "dark", [resolvedTheme]);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
+  if (!resolvedTheme) {
     return null;
   }
 
-  const isDark = resolvedTheme === "dark";
-
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="sm"
+    <span
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label="Toggle theme"
     >
-      {isDark ? "Light" : "Dark"}
-    </Button>
+      {isDark ? (
+        <HugeiconsIcon icon={Sun01Icon} />
+      ) : (
+        <HugeiconsIcon icon={Moon02Icon} />
+      )}
+    </span>
   );
 }
