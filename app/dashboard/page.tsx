@@ -1,9 +1,5 @@
-import { getMediaAnimalsWithVariants } from "@/lib/scan-media-animals";
+import { redirect } from "next/navigation";
 
-import DashboardClient from "./dashboard-client";
-
-export default async function DashboardPage() {
-  const animals = await getMediaAnimalsWithVariants();
-
-  return <DashboardClient animals={animals} />;
+export default function DashboardPage() {
+  redirect("/playground");
 }
