@@ -19,10 +19,10 @@ import { Button } from "@/components/ui/button";
 const registryUrl = "./registry.json";
 
 const installCommands = {
-  pnpm: `pnpm dlx shadcn@latest add web-pet --registry ${registryUrl}`,
-  npm: `npx shadcn@latest add web-pet --registry ${registryUrl}`,
-  yarn: `yarn dlx shadcn@latest add web-pet --registry ${registryUrl}`,
-  bun: `bunx --bun shadcn@latest add web-pet --registry ${registryUrl}`,
+  pnpm: `pnpm dlx shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
+  npm: `npx shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
+  yarn: `yarn dlx shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
+  bun: `bunx --bun shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
 };
 
 type InstallSnippetProps = {
