@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { GifAnimalConfig } from "./types";
+import { getGifUrl, resolveGifAction } from "./gif-utils";
 
 /**
  * Drives a GIF-based pet animation loop.
@@ -9,7 +10,8 @@ import type { GifAnimalConfig } from "./types";
  */
 export function useGifPetAnimation(
     ref: React.RefObject<HTMLDivElement | null>,
-    config: GifAnimalConfig,
+    config: GifAnimalConfig | null,
+    colorOverride?: string,
 ): void {
     const mousePos = useRef({ x: 0, y: 0 });
     const animalPos = useRef({ x: 10, y: 0 });
@@ -25,6 +27,9 @@ export function useGifPetAnimation(
     const lastStepTime = useRef(0);
 
     useEffect(() => {
+        if (!config) return;
+        const activeConfig = config;
+
         const {
             speed,
             idleDist,
@@ -32,11 +37,10 @@ export function useGifPetAnimation(
             hoverDist,
             idlePauseMs,
             scale: configScale,
-            actions,
             idleActions,
             movementActions,
             followMouse,
-        } = config;
+        } = activeConfig;
         const scale = configScale ?? 1;
 
         if (idleActions.length > 0) {
@@ -45,8 +49,7 @@ export function useGifPetAnimation(
 
         function setGif(name: string) {
             if (!ref.current) return;
-            const src = actions[name];
-            if (!src) return;
+            const src = getGifUrl(activeConfig, name, colorOverride);
             ref.current.style.backgroundImage = `url("${src}")`;
         }
 
@@ -115,7 +118,7 @@ export function useGifPetAnimation(
             const parentWidth =
                 ref.current?.parentElement?.getBoundingClientRect().width ??
                 window.innerWidth;
-            const spriteWidth = rect?.width ?? config.spriteSize.w;
+            const spriteWidth = rect?.width ?? activeConfig.spriteSize.w;
 
             let targetX: number;
 
@@ -156,9 +159,10 @@ export function useGifPetAnimation(
                     ref.current.style.transform = `scale(${scale}) scaleX(${facingDir.current})`;
                 }
             } else if (idle) {
-                if (!actions[idleAction.current] && idleActions.length > 0) {
-                    idleAction.current = idleActions[0].name;
-                }
+                idleAction.current = resolveGifAction(
+                    activeConfig,
+                    idleAction.current,
+                );
                 if (!followMouse && movementTargetX.current !== null) {
                     movementTargetX.current = null;
                     scheduleMovementPause(ts);
@@ -177,7 +181,10 @@ export function useGifPetAnimation(
                 }
 
                 if (idleActions.length > 0) {
-                    idleAction.current = idleActions[0].name;
+                    idleAction.current = resolveGifAction(
+                        activeConfig,
+                        idleActions[0].name,
+                    );
                 }
                 idleActionUntil.current = 0;
                 idleCooldownUntil.current = 0;
@@ -213,5 +220,5 @@ export function useGifPetAnimation(
             document.removeEventListener("mousemove", handleMouseMove);
             if (animationId.current) cancelAnimationFrame(animationId.current);
         };
-    }, [config, ref]);
+    }, [config, colorOverride, ref]);
 }

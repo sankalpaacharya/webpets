@@ -60,9 +60,6 @@ export type AnimalConfig = {
     movementActions: MovementAction[];
 };
 
-/** Maps an action name to a GIF URL */
-export type GifActionMap = Record<string, string>;
-
 /** Describes one idle behaviour for GIF-based pets */
 export type GifIdleAction = {
     /** Must match a key in the action map */
@@ -81,9 +78,16 @@ export type GifMovementAction = {
     speedMultiplier: number;
 };
 
+
 /** Configuration for a GIF-based pet */
 export type GifAnimalConfig = {
     name: string;
+    /** Folder name under /public/media */
+    mediaFolder: string;
+    /** Default color token used in GIF filenames */
+    defaultColor: string;
+    /** Optional allowed colors; defaults to [defaultColor] */
+    colors?: string[];
     /** Pixel dimensions of the GIF frame */
     spriteSize: { w: number; h: number };
     /** Render scale multiplier (optional) */
@@ -100,8 +104,8 @@ export type GifAnimalConfig = {
     idlePauseMs: { min: number; max: number };
     /** If true the pet chases the mouse cursor; if false it wanders autonomously */
     followMouse: boolean;
-    /** Action map keyed by action name */
-    actions: GifActionMap;
+    /** Available action keys for this pet */
+    actions: string[];
     /** Idle behaviours the pet can randomly perform */
     idleActions: GifIdleAction[];
     /** Movement behaviours the pet can randomly perform while walking */
