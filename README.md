@@ -1,3 +1,6 @@
+
+<img src="./public/images/showcase2.gif" alt="Web pets showcase" />
+
 # WebPets
 
 Tiny, friendly web pets you can drop into any site. Pick a character, set the vibe, and let it roam your page.
@@ -8,10 +11,6 @@ Tiny, friendly web pets you can drop into any site. Pick a character, set the vi
 - Pixel-perfect sprite animations
 - Calm mode for low-distraction pages
 - Multiple skins, colors, and personalities
-
-## Showcase
-
-<img src="./public/images/showcase2.gif" alt="Web pets showcase" />
 
 ## Quick Start
 
