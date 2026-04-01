@@ -30,9 +30,13 @@ const DEFAULT_GIF_PET = {
 export function GifPet({
   animal,
   color = "brown",
+  position = "fixed",
+  speed,
 }: {
   animal: string;
   color?: string;
+  position?: "fixed" | "absolute";
+  speed?: number;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const config: GifAnimalConfig = {
@@ -46,7 +50,7 @@ export function GifPet({
     idleDist: DEFAULT_GIF_PET.idleDist,
     idlePauseMs: DEFAULT_GIF_PET.idlePauseMs,
     movementActions: DEFAULT_GIF_PET.movementActions,
-    speed: getGifPetSpeed(animal, DEFAULT_GIF_PET.speed),
+    speed: speed ?? getGifPetSpeed(animal, DEFAULT_GIF_PET.speed),
     scale: DEFAULT_GIF_PET.scale,
     spriteSize: DEFAULT_GIF_PET.spriteSize,
     followMouse: DEFAULT_GIF_PET.followMouse,
@@ -59,7 +63,7 @@ export function GifPet({
     <div
       ref={ref}
       style={{
-        position: "fixed",
+        position,
         bottom: "0px",
         height: `${config.spriteSize.h}px`,
         width: `${config.spriteSize.w}px`,
