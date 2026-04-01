@@ -29,7 +29,7 @@ export default function Home() {
           <div className="w-full max-w-3xl">
             <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/60 shadow-[0_20px_60px_-35px_rgba(0,0,0,0.45)] backdrop-blur">
               <Image
-                src="/images/showcase.gif"
+                src="/images/showcase2.gif"
                 alt="Web pet showcase"
                 width={1200}
                 height={700}
@@ -70,7 +70,7 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/70">
               <div className="border-b border-border/60 px-4 py-3 text-sm font-medium">
-                Pixie Studio
+                Portfolio
               </div>
               <Image
                 src="/images/showcase.gif"
@@ -82,11 +82,11 @@ export default function Home() {
             </div>
             <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/70">
               <div className="border-b border-border/60 px-4 py-3 text-sm font-medium">
-                Neon Notes
+                Inside React
               </div>
               <Image
-                src="/images/showcase.gif"
-                alt="Neon Notes web pet"
+                src="/images/showcase1.gif"
+                alt="Inside React"
                 width={900}
                 height={600}
                 className="h-auto w-full"
@@ -94,10 +94,10 @@ export default function Home() {
             </div>
             <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/70">
               <div className="border-b border-border/60 px-4 py-3 text-sm font-medium">
-                Orbit Journal
+                Web pets
               </div>
               <Image
-                src="/images/showcase.gif"
+                src="/images/showcase2.gif"
                 alt="Orbit Journal web pet"
                 width={900}
                 height={600}
