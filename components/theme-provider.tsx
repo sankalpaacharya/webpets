@@ -8,6 +8,7 @@ type ThemeProviderProps = {
   defaultTheme?: "light" | "dark" | "system";
   enableSystem?: boolean;
   storageKey?: string;
+  disableTransitionOnChange?: boolean;
 };
 
 function applyThemeClass(theme: "light" | "dark") {
@@ -22,7 +23,7 @@ export function ThemeProvider({
   enableSystem = true,
   storageKey = "theme",
 }: ThemeProviderProps) {
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const stored = localStorage.getItem(storageKey) as
       | "light"
       | "dark"

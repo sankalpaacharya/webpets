@@ -23,6 +23,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const themeScript = `(() => {
+  try {
+    const key = "theme";
+    const stored = localStorage.getItem(key);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const resolved = stored === "dark" || stored === "light"
+      ? stored
+      : prefersDark
+        ? "dark"
+        : "light";
+    const root = document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(resolved);
+    root.style.colorScheme = resolved;
+  } catch {
+  }
+})();`;
+
   return (
     <html
       lang="en"
@@ -35,6 +53,9 @@ export default function RootLayout({
         figtree.variable,
       )}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider
           attribute="class"
