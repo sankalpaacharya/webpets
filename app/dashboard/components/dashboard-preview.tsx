@@ -22,6 +22,7 @@ type PreviewPanelProps = {
   speed: number;
   scale: number;
   followMouse: boolean;
+  hoverMessage: string;
 };
 
 export function PreviewPanel({
@@ -30,6 +31,7 @@ export function PreviewPanel({
   speed,
   scale,
   followMouse,
+  hoverMessage,
 }: PreviewPanelProps) {
   const code = useMemo(() => {
     const resolvedAnimal = animal || "fox";
@@ -43,11 +45,14 @@ export function PreviewPanel({
     if (followMouse) {
       props.push("followMouse");
     }
+    if (hoverMessage.trim().length > 0) {
+      props.push(`hoverMessage="${hoverMessage.replace(/"/g, '\\"')}"`);
+    }
 
     return `import { WebPet } from "@/components/web-pet";\n\n<WebPet\n  ${props.join(
       "\n  ",
     )}\n/>`;
-  }, [animal, color, speed, scale, followMouse]);
+  }, [animal, color, speed, scale, followMouse, hoverMessage]);
   const highlighterRef = useRef<Highlighter | null>(null);
   const [codeHtml, setCodeHtml] = useState("");
   const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
@@ -122,6 +127,7 @@ export function PreviewPanel({
                   speed={speed}
                   scale={scale}
                   followMouse={followMouse}
+                  hoverMessage={hoverMessage}
                   position="absolute"
                 />
               ) : null}

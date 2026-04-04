@@ -25,6 +25,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
   const [scale, setScale] = useState(0.5);
   const [speed, setSpeed] = useState(baseSpeed);
   const [followMouse, setFollowMouse] = useState(false);
+  const [hoverMessage, setHoverMessage] = useState("");
   const selectedAnimal = useMemo(
     () => animals.find((animal) => animal.name === selectedAnimalName) ?? null,
     [animals, selectedAnimalName],
@@ -65,6 +66,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
                 speed={speed}
                 scale={scale}
                 followMouse={followMouse}
+                hoverMessage={hoverMessage}
               />
               <InstallSnippet
                 animal={selectedAnimalName}
@@ -86,10 +88,12 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
                 selectedColor={selectedColor}
                 availableColors={availableColors}
                 followMouse={followMouse}
+                hoverMessage={hoverMessage}
                 onSpeedChange={setSpeed}
                 onScaleChange={setScale}
                 onColorChange={setSelectedColor}
                 onFollowMouseChange={setFollowMouse}
+                onHoverMessageChange={setHoverMessage}
               />
             </div>
           </div>

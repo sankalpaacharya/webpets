@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/8bit/card";
+import { Input } from "@/components/ui/8bit/input";
 import {
   Select,
   SelectContent,
@@ -31,10 +32,12 @@ type ControlsPanelProps = {
   selectedColor: string;
   availableColors: string[];
   followMouse: boolean;
+  hoverMessage: string;
   onSpeedChange: (value: number) => void;
   onScaleChange: (value: number) => void;
   onColorChange: (value: string) => void;
   onFollowMouseChange: (value: boolean) => void;
+  onHoverMessageChange: (value: string) => void;
 };
 
 export function ControlsPanel({
@@ -44,10 +47,12 @@ export function ControlsPanel({
   selectedColor,
   availableColors,
   followMouse,
+  hoverMessage,
   onSpeedChange,
   onScaleChange,
   onColorChange,
   onFollowMouseChange,
+  onHoverMessageChange,
 }: ControlsPanelProps) {
   return (
     <aside className="dashboard-enter space-y-5 text-sm text-muted-foreground">
@@ -113,6 +118,19 @@ export function ControlsPanel({
               aria-label="Follow mouse"
             />
           </div>
+          <label className="flex flex-col gap-2">
+            <span className="font-medium text-foreground">Hover text</span>
+            <Input
+              value={hoverMessage}
+              onChange={(event) => onHoverMessageChange(event.target.value)}
+              placeholder="Type a message..."
+              maxLength={80}
+              aria-label="Hover text"
+            />
+            <span className="text-xs">
+              Optional. Shows only while hovering the pet.
+            </span>
+          </label>
         </CardContent>
       </Card>
     </aside>
