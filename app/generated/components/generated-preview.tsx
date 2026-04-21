@@ -1,6 +1,8 @@
 "use client";
 
-import { Download01Icon } from "@hugeicons/core-free-icons";
+import { useState } from "react";
+
+import { Download01Icon, LinkSquare01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import {
@@ -26,6 +28,22 @@ export function GeneratedPreview({
   selectedGif,
 }: GeneratedPreviewProps) {
   const downloadLabel = selectedGif?.fileName ?? "generated.gif";
+  const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
+
+  const handleCopyUrl = async () => {
+    if (!selectedGif) return;
+    try {
+      const url = new URL(
+        selectedGif.gifUrl,
+        window.location.origin,
+      ).toString();
+      await navigator.clipboard.writeText(url);
+      setCopyState("copied");
+      window.setTimeout(() => setCopyState("idle"), 1500);
+    } catch {
+      setCopyState("idle");
+    }
+  };
 
   return (
     <Card className="dashboard-enter relative h-105 overflow-hidden">
@@ -44,19 +62,37 @@ export function GeneratedPreview({
           <div className="text-xs text-muted-foreground">
             {selectedGif ? selectedGif.fileName : "Pick a variant + action."}
           </div>
-          {selectedGif ? (
-            <Button asChild variant="outline" size="sm" className="px-3">
-              <a href={selectedGif.gifUrl} download={downloadLabel}>
+          <div className="flex flex-wrap items-center gap-2">
+            {selectedGif ? (
+              <Button
+                variant="outline"
+                size="sm"
+                className="px-3"
+                onClick={handleCopyUrl}
+              >
+                <HugeiconsIcon icon={LinkSquare01Icon} size={16} />
+                {copyState === "copied" ? "Copied" : "Copy URL"}
+              </Button>
+            ) : (
+              <Button variant="outline" size="sm" className="px-3" disabled>
+                <HugeiconsIcon icon={LinkSquare01Icon} size={16} />
+                Copy URL
+              </Button>
+            )}
+            {selectedGif ? (
+              <Button asChild variant="outline" size="sm" className="px-3">
+                <a href={selectedGif.gifUrl} download={downloadLabel}>
+                  <HugeiconsIcon icon={Download01Icon} size={16} />
+                  Download GIF
+                </a>
+              </Button>
+            ) : (
+              <Button variant="outline" size="sm" className="px-3" disabled>
                 <HugeiconsIcon icon={Download01Icon} size={16} />
                 Download GIF
-              </a>
-            </Button>
-          ) : (
-            <Button variant="outline" size="sm" className="px-3" disabled>
-              <HugeiconsIcon icon={Download01Icon} size={16} />
-              Download GIF
-            </Button>
-          )}
+              </Button>
+            )}
+          </div>
         </div>
         <div className="flex h-full items-center justify-center rounded-2xl border border-border bg-card/60 p-6">
           {selectedGif ? (
