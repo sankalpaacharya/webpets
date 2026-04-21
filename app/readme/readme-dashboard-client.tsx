@@ -78,7 +78,7 @@ export default function ReadmeDashboardClient({
           (animal) => animal.name === data.config?.animal,
         )
           ? data.config.animal
-          : animals[0]?.name ?? "";
+          : (animals[0]?.name ?? "");
         const nextAnimal = animals.find(
           (animal) => animal.name === configAnimal,
         );
@@ -87,7 +87,7 @@ export default function ReadmeDashboardClient({
         );
         const configVariant = variantOptions.includes(data.config.variant)
           ? data.config.variant
-          : variantOptions[0] ?? "";
+          : (variantOptions[0] ?? "");
         const actionOptions = Array.from(
           new Set(
             nextAnimal?.variants
@@ -97,7 +97,7 @@ export default function ReadmeDashboardClient({
         );
         const configAction = actionOptions.includes(data.config.action)
           ? data.config.action
-          : actionOptions[0] ?? "";
+          : (actionOptions[0] ?? "");
 
         setSelectedAnimalName(configAnimal);
         setSelectedVariant(configVariant);
@@ -125,7 +125,7 @@ export default function ReadmeDashboardClient({
       return;
     }
     setSelectedVariant((prev) =>
-      availableVariants.includes(prev) ? prev : availableVariants[0] ?? "",
+      availableVariants.includes(prev) ? prev : (availableVariants[0] ?? ""),
     );
   }, [availableVariants]);
 
@@ -135,7 +135,7 @@ export default function ReadmeDashboardClient({
       return;
     }
     setSelectedAction((prev) =>
-      availableActions.includes(prev) ? prev : availableActions[0] ?? "",
+      availableActions.includes(prev) ? prev : (availableActions[0] ?? ""),
     );
   }, [availableActions]);
 

@@ -1,6 +1,7 @@
 import "server-only";
 
 import fs from "fs/promises";
+import type { Dirent } from "fs";
 import path from "path";
 
 import type {
@@ -49,7 +50,7 @@ export async function getGeneratedAnimalsWithVariants(): Promise<
   GeneratedAnimalWithVariants[]
 > {
   "use cache";
-  let entries: fs.Dirent[] = [];
+  let entries: Dirent[] = [];
   try {
     entries = await fs.readdir(GENERATED_ROOT, { withFileTypes: true });
   } catch {

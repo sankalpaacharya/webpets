@@ -53,7 +53,9 @@ export function ReadmePreview({
       <CardHeader className="pb-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <CardTitle>README GIF</CardTitle>
-          <div className="text-xs text-muted-foreground">Saved: {savedLabel}</div>
+          <div className="text-xs text-muted-foreground">
+            Saved: {savedLabel}
+          </div>
         </div>
       </CardHeader>
       <CardContent className="flex h-full flex-col gap-4 pb-6 text-xs text-muted-foreground">
