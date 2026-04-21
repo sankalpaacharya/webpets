@@ -27,6 +27,9 @@ export function SiteNavbar() {
           <Link href="/playground" className="transition hover:text-foreground">
             Playground
           </Link>
+          <Link href="/generated" className="transition hover:text-foreground">
+            GIFs
+          </Link>
           <Link href="/docs" className="transition hover:text-foreground">
             Docs
           </Link>
@@ -66,6 +69,9 @@ export function SiteNavbar() {
         >
           <Link href="/playground" className="transition hover:text-foreground">
             Playground
+          </Link>
+          <Link href="/generated" className="transition hover:text-foreground">
+            GIFs
           </Link>
           <Link href="/docs" className="transition hover:text-foreground">
             Docs
