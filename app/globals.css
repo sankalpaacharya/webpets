@@ -180,6 +180,18 @@ body {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Shiki dual-theme output: pick the palette that matches the site theme
+   and let the surrounding card provide the background. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background-color: transparent !important;
+}
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
 /* Inside a reading region every font token resolves to Inter, so shadcn
    components that use font-sans or font-heading follow along. */
 .font-body {

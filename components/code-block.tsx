@@ -81,7 +81,6 @@ type CodeBlockProps = {
   title?: string;
   header?: React.ReactNode;
   className?: string;
-  theme?: string;
 };
 
 export function CodeBlock({
@@ -90,7 +89,6 @@ export function CodeBlock({
   title,
   header,
   className,
-  theme = "github-dark",
 }: CodeBlockProps) {
   const [html, setHtml] = useState<string | null>(null);
 
@@ -100,16 +98,15 @@ export function CodeBlock({
       return;
     }
 
+    // Both palettes are emitted as CSS variables; globals.css picks one
+    // based on the site's theme class, so the block follows light/dark mode.
     const out = await codeToHtml(code, {
       lang,
-      theme,
-      colorReplacements: {
-        "#0d1117": "var(--background)",
-        "#ffffff": "var(--background)",
-      },
+      themes: { light: "github-light", dark: "github-dark" },
+      defaultColor: false,
     });
     setHtml(out);
-  }, [code, lang, theme]);
+  }, [code, lang]);
 
   useEffect(() => {
     generateHtml();
