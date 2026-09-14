@@ -18,6 +18,10 @@ export function Code({ children }: { children: ReactNode }) {
   );
 }
 
+export function Note({ children }: { children: ReactNode }) {
+  return <p className="text-sm leading-6 text-muted-foreground">{children}</p>;
+}
+
 type SectionProps = {
   id: string;
   title: string;
@@ -33,10 +37,6 @@ export function Section({ id, title, children }: SectionProps) {
   );
 }
 
-export function Note({ children }: { children: ReactNode }) {
-  return <p className="text-sm leading-6 text-muted-foreground">{children}</p>;
-}
-
 export type PropRow = {
   name: string;
   type: string;
@@ -45,33 +45,47 @@ export type PropRow = {
   description: string;
 };
 
-export function PropsTable({ rows }: { rows: PropRow[] }) {
+type PropsTableProps = {
+  rows: PropRow[];
+  /** Override the column headings, e.g. when the table lists modes, not props. */
+  columns?: Partial<Record<"name" | "type" | "defaultValue" | "description", string>>;
+};
+
+const DEFAULT_COLUMNS = {
+  name: "Prop",
+  type: "Type",
+  defaultValue: "Default",
+  description: "Description",
+};
+
+export function PropsTable({ rows, columns }: PropsTableProps) {
+  const heading = { ...DEFAULT_COLUMNS, ...columns };
+  const mono = "font-mono text-[13px]";
+
   return (
     <div className="overflow-hidden rounded-lg border border-border">
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
-            <TableHead className="w-[160px]">Prop</TableHead>
-            <TableHead className="w-[200px]">Type</TableHead>
-            <TableHead className="w-[140px]">Default</TableHead>
-            <TableHead>Description</TableHead>
+            <TableHead className="w-[140px]">{heading.name}</TableHead>
+            <TableHead className="w-[180px]">{heading.type}</TableHead>
+            <TableHead className="w-[130px]">{heading.defaultValue}</TableHead>
+            <TableHead>{heading.description}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name} className="hover:bg-transparent">
-              <TableCell className="font-mono text-[13px]">{row.name}</TableCell>
-              <TableCell className="font-mono text-[13px] text-muted-foreground">
-                {row.type}
-              </TableCell>
-              <TableCell className="font-mono text-[13px] text-muted-foreground">
+              <TableCell className={mono}>{row.name}</TableCell>
+              <TableCell className={`${mono} whitespace-normal text-muted-foreground`}>{row.type}</TableCell>
+              <TableCell className={`${mono} text-muted-foreground`}>
                 {row.defaultValue ?? (
                   <Badge variant="secondary" className="font-body">
                     Required
                   </Badge>
                 )}
               </TableCell>
-              <TableCell className="text-sm text-muted-foreground">
+              <TableCell className="whitespace-normal text-sm leading-5 text-muted-foreground">
                 {row.description}
               </TableCell>
             </TableRow>
@@ -79,29 +93,5 @@ export function PropsTable({ rows }: { rows: PropRow[] }) {
         </TableBody>
       </Table>
     </div>
-  );
-}
-
-export type NavItem = { id: string; label: string };
-
-export function DocNav({ items }: { items: NavItem[] }) {
-  return (
-    <nav aria-label="On this page" className="lg:sticky lg:top-24">
-      <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-        On This Page
-      </p>
-      <ul className="space-y-1.5 text-sm">
-        {items.map((item) => (
-          <li key={item.id}>
-            <a
-              href={`#${item.id}`}
-              className="block py-0.5 text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
   );
 }
