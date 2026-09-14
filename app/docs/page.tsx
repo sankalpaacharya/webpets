@@ -201,19 +201,19 @@ const TOC = [
 
 export default function DocsPage() {
   return (
-    <div className="h-[calc(100vh-4rem)] overflow-y-auto bg-background text-foreground">
+    <div className="h-[calc(100vh-4rem)] overflow-y-auto bg-background font-body text-foreground">
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-14 px-6 py-12">
         <header className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+          <p className="font-pixel text-xs uppercase tracking-[0.3em] text-muted-foreground">
             Docs
           </p>
-          <h1 className="text-3xl sm:text-4xl">WebPet</h1>
-          <p className="max-w-2xl text-sm text-muted-foreground">
+          <h1 className="font-pixel text-3xl sm:text-4xl">WebPet</h1>
+          <p className="max-w-2xl text-[15px] leading-7 text-muted-foreground">
             One React component and a folder of GIFs. The pet walks along the
             bottom of whatever you put it in, rests, reacts when the cursor
             gets close, and never blocks a click.
           </p>
-          <nav className="flex flex-wrap gap-x-4 gap-y-1 pt-2 text-sm text-muted-foreground">
+          <nav className="flex flex-wrap gap-x-5 gap-y-1 pt-2 text-sm text-muted-foreground">
             {TOC.map(([id, label]) => (
               <a
                 key={id}
@@ -239,7 +239,7 @@ export default function DocsPage() {
             <Link href="/playground" className="underline underline-offset-4">
               playground
             </Link>
-            , hit <span className="text-foreground">Download assets</span>, and
+            , hit <span className="font-medium text-foreground">Download assets</span>, and
             unzip it into <Code>public</Code>. You end up with this:
           </Prose>
           <CodeBlock code={TREE} lang="bash" title="public/" />
@@ -275,25 +275,25 @@ export default function DocsPage() {
         </Section>
 
         <Section id="behavior" title="How it behaves">
-          <div className="space-y-3 text-sm text-muted-foreground">
+          <div className="space-y-3 text-[15px] leading-7 text-muted-foreground">
             <p>
               The pet ticks eight times a second. Each tick it does one of three
               things, in this order of priority:
             </p>
             <ol className="list-decimal space-y-2 pl-5">
               <li>
-                <span className="text-foreground">Hover.</span> If the cursor is
+                <span className="font-medium text-foreground">Hover.</span> If the cursor is
                 within <Code>hoverDist</Code> of the sprite center, it stops and
                 plays <Code>hoverAction</Code>. The bubble shows here.
               </li>
               <li>
-                <span className="text-foreground">Idle.</span> If it is within{" "}
+                <span className="font-medium text-foreground">Idle.</span> If it is within{" "}
                 <Code>idleDist</Code> of its target, it rests and cycles through{" "}
                 <Code>idleActions</Code>. After a wander it waits{" "}
                 <Code>idlePauseMs</Code> before picking a new target.
               </li>
               <li>
-                <span className="text-foreground">Walking.</span> Otherwise it
+                <span className="font-medium text-foreground">Walking.</span> Otherwise it
                 moves <Code>speed × speedMultiplier</Code> px toward its target
                 using one of the <Code>movementActions</Code>, and faces the
                 way it is going.
@@ -314,9 +314,9 @@ export default function DocsPage() {
         </Section>
 
         <Section id="gotchas" title="Things to know">
-          <ul className="list-disc space-y-3 pl-5 text-sm text-muted-foreground">
+          <ul className="list-disc space-y-3 pl-5 text-[15px] leading-7 text-muted-foreground">
             <li>
-              <span className="text-foreground">
+              <span className="font-medium text-foreground">
                 It never eats your clicks.
               </span>{" "}
               The wrapper has <Code>pointer-events: none</Code>. Hover is
@@ -324,7 +324,7 @@ export default function DocsPage() {
               why it still works.
             </li>
             <li>
-              <span className="text-foreground">
+              <span className="font-medium text-foreground">
                 A blurred or transformed parent captures a fixed pet.
               </span>{" "}
               Browsers treat any ancestor with <Code>transform</Code>,{" "}
@@ -334,27 +334,27 @@ export default function DocsPage() {
               uses it on purpose to keep pets in the navbar.
             </li>
             <li>
-              <span className="text-foreground">Missing GIFs fall back.</span>{" "}
+              <span className="font-medium text-foreground">Missing GIFs fall back.</span>{" "}
               Some animals lack some actions. The manifest knows which, and an
               action that doesn&apos;t exist is swapped for one that does
               rather than requesting a 404.
             </li>
             <li>
-              <span className="text-foreground">
+              <span className="font-medium text-foreground">
                 Reduced motion is respected.
               </span>{" "}
               With <Code>prefers-reduced-motion</Code> set, the pet is drawn
               once in its idle pose and does not move.
             </li>
             <li>
-              <span className="text-foreground">Many pets are cheap.</span>{" "}
+              <span className="font-medium text-foreground">Many pets are cheap.</span>{" "}
               They share one pointer listener and each runs a small pure
               step function per tick. Re-rendering the parent does not restart
               the animation, so passing inline objects to{" "}
               <Code>behavior</Code> is fine.
             </li>
             <li>
-              <span className="text-foreground">Serve from anywhere.</span>{" "}
+              <span className="font-medium text-foreground">Serve from anywhere.</span>{" "}
               Set <Code>mediaBaseUrl</Code> if the folders live on a CDN.
               Hover-bubble placement reads the GIF pixels, so a cross-origin
               host needs to send <Code>Access-Control-Allow-Origin</Code> or
@@ -385,7 +385,7 @@ export default function DocsPage() {
           </Prose>
         </Section>
 
-        <footer className="border-t border-border/60 pt-6 text-sm text-muted-foreground">
+        <footer className="border-t border-border/60 pt-6 text-[15px] text-muted-foreground">
           Asset licenses are listed on the{" "}
           <Link href="/credits" className="underline underline-offset-4">
             credits page

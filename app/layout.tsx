@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, Figtree } from "next/font/google";
+import { Inter, JetBrains_Mono, Press_Start_2P } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNavbar } from "@/components/navbar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-code",
+});
 
 const pixelFont = Press_Start_2P({
   variable: "--font-pixel",
@@ -82,8 +87,9 @@ export default function RootLayout({
         "h-full",
         "antialiased",
         pixelFont.variable,
+        inter.variable,
+        jetbrainsMono.variable,
         "font-sans",
-        figtree.variable,
       )}
     >
       <head>
