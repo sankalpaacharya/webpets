@@ -15,15 +15,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/code-block";
 import { Button } from "@/components/ui/button";
-
-const registryUrl = "./registry.json";
-
-const installCommands = {
-  pnpm: `pnpm dlx shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
-  npm: `npx shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
-  yarn: `yarn dlx shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
-  bun: `bunx --bun shadcn@latest add https://webpets-flame.vercel.app/r/web-pet.json`,
-};
+import { INSTALL_COMMANDS as installCommands } from "@/lib/install-commands";
 
 type InstallSnippetProps = {
   animal: string;
