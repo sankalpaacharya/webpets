@@ -6,7 +6,7 @@ import { AnimalSidebar } from "@/app/dashboard/components/dashboard-sidebar";
 import { ControlsPanel } from "@/app/dashboard/components/dashboard-control";
 import { PreviewPanel } from "@/app/dashboard/components/dashboard-preview";
 import { InstallSnippet } from "@/app/dashboard/components/install-snippet";
-import { getWebPetSpeed, WEB_PET_ACTIONS } from "@/components/web-pet";
+import { getWebPetSpeed } from "@/components/web-pet";
 import Link from "next/link";
 import type { MediaAnimalWithVariants } from "@/lib/types";
 
@@ -19,7 +19,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
     animals[0]?.name ?? "",
   );
   const baseSpeed = useMemo(
-    () => getWebPetSpeed(selectedAnimalName ?? "", 4.5),
+    () => getWebPetSpeed(selectedAnimalName),
     [selectedAnimalName],
   );
   const [scale, setScale] = useState(0.5);
@@ -39,6 +39,13 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
   }, [selectedAnimal]);
   const [selectedColor, setSelectedColor] = useState(
     availableColors[0] ?? "brown",
+  );
+  const availableActions = useMemo(
+    () =>
+      selectedAnimal?.variants
+        .filter((variant) => variant.color === selectedColor)
+        .map((variant) => variant.action) ?? [],
+    [selectedAnimal, selectedColor],
   );
 
   useEffect(() => {
@@ -71,7 +78,7 @@ export default function DashboardClient({ animals }: DashboardClientProps) {
               <InstallSnippet
                 animal={selectedAnimalName}
                 color={selectedColor}
-                actions={WEB_PET_ACTIONS}
+                actions={availableActions}
               />
               <Link
                 href={"/docs"}

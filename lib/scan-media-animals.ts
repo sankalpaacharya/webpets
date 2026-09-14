@@ -3,6 +3,7 @@ import "server-only";
 import fs from "fs/promises";
 import path from "path";
 
+import { parsePetGifName } from "./pet-media";
 import type {
   MediaAnimal,
   MediaAnimalVariant,
@@ -20,23 +21,10 @@ async function hasLogo(folderPath: string) {
 }
 
 function parseGifVariant(fileName: string, animalName: string) {
-  if (!fileName.toLowerCase().endsWith(".gif")) return null;
-  const baseName = fileName.slice(0, -4);
-  const parts = baseName.split("_");
-  if (parts.length < 3) return null;
-
-  const fpsPart = parts[parts.length - 1];
-  const fpsMatch = fpsPart.match(/^(\d+)fps$/i);
-  if (!fpsMatch) return null;
-
-  const color = parts[0];
-  const action = parts.slice(1, -1).join("_");
-  if (!color || !action) return null;
-
+  const parsed = parsePetGifName(fileName);
+  if (!parsed) return null;
   return {
-    color,
-    action,
-    fps: Number(fpsMatch[1]),
+    ...parsed,
     gifUrl: `/media/${animalName}/${fileName}`,
   } satisfies MediaAnimalVariant;
 }

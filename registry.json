@@ -12,6 +12,14 @@
         {
           "path": "components/web-pet.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "lib/web-pet-engine.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "lib/pet-manifest.ts",
+          "type": "registry:lib"
         }
       ]
     }
