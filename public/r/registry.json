@@ -22,6 +22,22 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "pet-picker",
+      "type": "registry:component",
+      "title": "Pet Picker",
+      "description": "A web pet visitors can click to choose their own animal.",
+      "registryDependencies": [
+        "popover",
+        "https://webpets-flame.vercel.app/r/web-pet.json"
+      ],
+      "files": [
+        {
+          "path": "components/pet-picker.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

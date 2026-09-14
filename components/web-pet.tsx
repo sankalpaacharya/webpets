@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties, RefObject } from "react";
+import type { CSSProperties, KeyboardEvent, Ref, RefObject } from "react";
 
 import { PET_MANIFEST } from "@/lib/pet-manifest";
 import {
@@ -55,6 +55,15 @@ export type WebPetProps = {
     maxWidth?: number;
     offsetY?: number;
   };
+  /**
+   * Make the pet clickable. The wrapper becomes a button and stops letting
+   * pointer events pass through to the page beneath it.
+   */
+  onClick?: () => void;
+  /** Freeze movement, e.g. while a menu anchored to the pet is open. */
+  paused?: boolean;
+  /** The wrapper element, useful for anchoring a popover to the pet. */
+  ref?: Ref<HTMLDivElement>;
 };
 
 /** Base speed for an animal, from the generated manifest. */
@@ -70,6 +79,7 @@ type WebPetConfig = {
   behavior: PetBehavior;
   gifUrl: (action: string) => string;
   scale: number;
+  paused: boolean;
 };
 
 const SPRITE_SIZE_PX = 100;
@@ -102,6 +112,7 @@ function resolveConfig(props: WebPetProps): WebPetConfig {
   return {
     behavior,
     scale: props.scale ?? DEFAULT_SCALE,
+    paused: props.paused ?? false,
     gifUrl: (action) =>
       `${base}/${props.animal}/${color}_${resolveAction(behavior, action)}_8fps.gif`,
   };
@@ -217,6 +228,7 @@ function useWebPetLoop(
       lastTick = ts;
 
       const current = configRef.current;
+      if (current.paused) return;
       const bounds = readBounds(wrapper, positionRef.current);
       const size = SPRITE_SIZE_PX * current.scale;
 
@@ -389,9 +401,24 @@ export function WebPet(props: WebPetProps) {
     style,
     hoverMessage,
     speech,
+    onClick,
+    ref,
   } = props;
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const setWrapperRef = (el: HTMLDivElement | null) => {
+    wrapperRef.current = el;
+    if (typeof ref === "function") ref(el);
+    else if (ref) ref.current = el;
+  };
+  const onKeyDown = onClick
+    ? (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onClick();
+        }
+      }
+    : undefined;
   const spriteRef = useRef<HTMLDivElement | null>(null);
   const [mode, setMode] = useState<PetMode>("idle");
 
@@ -411,7 +438,12 @@ export function WebPet(props: WebPetProps) {
 
   return (
     <div
-      ref={wrapperRef}
+      ref={setWrapperRef}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      aria-label={onClick ? `${props.animal} pet` : undefined}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
       style={{
         position,
         bottom: 0,
@@ -419,7 +451,8 @@ export function WebPet(props: WebPetProps) {
         height: `${sizePx}px`,
         width: `${sizePx}px`,
         zIndex,
-        pointerEvents: "none",
+        pointerEvents: onClick ? "auto" : "none",
+        cursor: onClick ? "pointer" : undefined,
         ...style,
       }}
     >

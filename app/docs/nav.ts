@@ -46,6 +46,16 @@ export const DOCS_NAV: DocGroup[] = [
     ],
   },
   {
+    label: "Components",
+    items: [
+      {
+        title: "Pet Picker",
+        href: "/docs/pet-picker",
+        description: "Let visitors click the pet and choose their own.",
+      },
+    ],
+  },
+  {
     label: "Guides",
     items: [
       {
