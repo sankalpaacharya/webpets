@@ -268,6 +268,8 @@ function measureHeadPadding(src: string): Promise<number | null> {
 
   const promise = new Promise<number | null>((resolve) => {
     const image = new Image();
+    // Lets the canvas read pixels from a CDN that sends CORS headers.
+    image.crossOrigin = "anonymous";
     image.onload = () => {
       try {
         const canvas = document.createElement("canvas");
