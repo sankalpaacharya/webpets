@@ -1,20 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import type { Highlighter } from "shiki";
+import { useMemo } from "react";
 
-import { ClipboardIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-
-import { WebPet } from "@/components/web-pet";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/8bit/card";
+import { CodeBlock } from "@/components/code-block";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { WebPet } from "@/components/web-pet";
 
 type PreviewPanelProps = {
   animal: string;
@@ -25,101 +16,43 @@ type PreviewPanelProps = {
   hoverMessage: string;
 };
 
-export function PreviewPanel({
-  animal,
-  color,
-  speed,
-  scale,
-  followMouse,
-  hoverMessage,
-}: PreviewPanelProps) {
-  const code = useMemo(() => {
-    const resolvedAnimal = animal || "fox";
-    const props = [
-      `animal="${resolvedAnimal}"`,
-      `color="${color}"`,
-      `speed={${Number(speed.toFixed(2))}}`,
-      `scale={${Number(scale.toFixed(2))}}`,
-    ];
+function buildSnippet(props: PreviewPanelProps): string {
+  const lines = [
+    `animal="${props.animal || "fox"}"`,
+    `color="${props.color}"`,
+    `speed={${Number(props.speed.toFixed(2))}}`,
+    `scale={${Number(props.scale.toFixed(2))}}`,
+  ];
+  if (props.followMouse) lines.push("followMouse");
+  const message = props.hoverMessage.trim();
+  if (message) lines.push(`hoverMessage="${message.replace(/"/g, '\\"')}"`);
 
-    if (followMouse) {
-      props.push("followMouse");
-    }
-    if (hoverMessage.trim().length > 0) {
-      props.push(`hoverMessage="${hoverMessage.replace(/"/g, '\\"')}"`);
-    }
+  return `import { WebPet } from "@/components/web-pet";\n\n<WebPet\n  ${lines.join("\n  ")}\n/>`;
+}
 
-    return `import { WebPet } from "@/components/web-pet";\n\n<WebPet\n  ${props.join(
-      "\n  ",
-    )}\n/>`;
-  }, [animal, color, speed, scale, followMouse, hoverMessage]);
-  const highlighterRef = useRef<Highlighter | null>(null);
-  const [codeHtml, setCodeHtml] = useState("");
-  const [copyState, setCopyState] = useState<"idle" | "copied">("idle");
-
-  useEffect(() => {
-    let active = true;
-
-    const renderCode = async () => {
-      const { createHighlighter } = await import("shiki");
-      if (!highlighterRef.current) {
-        highlighterRef.current = await createHighlighter({
-          themes: ["github-dark"],
-          langs: ["tsx"],
-        });
-      }
-
-      const html = highlighterRef.current.codeToHtml(code, {
-        lang: "tsx",
-        theme: "github-dark",
-      });
-
-      if (active) {
-        setCodeHtml(html);
-      }
-    };
-
-    renderCode();
-
-    return () => {
-      active = false;
-    };
-  }, [code]);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopyState("copied");
-      window.setTimeout(() => setCopyState("idle"), 1500);
-    } catch {
-      setCopyState("idle");
-    }
-  };
+export function PreviewPanel(props: PreviewPanelProps) {
+  const { animal, color, speed, scale, followMouse, hoverMessage } = props;
+  const code = useMemo(() => buildSnippet(props), [props]);
 
   return (
-    <Card className="dashboard-enter relative h-105 overflow-hidden">
-      <Tabs defaultValue="preview" className="flex h-full flex-col">
-        <CardHeader className="relative">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <CardTitle className="sr-only">Preview</CardTitle>
-            <TabsList className="text-xs gap-2">
-              <TabsTrigger value="preview">Preview</TabsTrigger>
-              <TabsTrigger value="code">Code</TabsTrigger>
-            </TabsList>
-          </div>
+    <Card className="gap-0 py-0">
+      <Tabs defaultValue="preview">
+        <CardHeader className="border-b border-border px-4 py-3">
+          <TabsList>
+            <TabsTrigger value="preview">Preview</TabsTrigger>
+            <TabsTrigger value="code">Code</TabsTrigger>
+          </TabsList>
         </CardHeader>
-        <CardContent className="relative flex h-full flex-col gap-4 pb-6 text-xs text-muted-foreground">
-          <TabsContent value="preview" className="relative h-full">
+        <CardContent className="p-4">
+          <TabsContent value="preview">
             <div
-              className="absolute inset-0"
+              className="relative h-72 overflow-hidden rounded-md border border-border"
               style={{
                 backgroundImage: "url('/media/background/house.png')",
-                backgroundRepeat: "no-repeat",
                 backgroundPosition: "center bottom",
                 backgroundSize: "cover",
               }}
-            />
-            <div className="relative flex h-full items-end justify-center">
+            >
               {animal ? (
                 <WebPet
                   animal={animal}
@@ -133,27 +66,8 @@ export function PreviewPanel({
               ) : null}
             </div>
           </TabsContent>
-          <TabsContent value="code" className="relative h-full">
-            <div className="flex items-center justify-end gap-3">
-              <Button
-                variant="outline"
-                size="sm"
-                className="px-4"
-                onClick={handleCopy}
-              >
-                <HugeiconsIcon icon={ClipboardIcon} size={16} />
-                {copyState === "copied" ? "Copied" : "Copy"}
-              </Button>
-            </div>
-            <div className="mt-4 h-[calc(100%-2.5rem)] overflow-auto rounded-2xl border border-border bg-card/60 p-3 text-xs font-mono [&_.shiki]:whitespace-pre-wrap [&_.shiki]:break-words [&_.shiki]:m-0 [&_.shiki>code]:whitespace-pre-wrap [&_.shiki>code]:break-words [&>pre]:whitespace-pre-wrap [&>pre]:break-words [&>pre]:m-0">
-              {codeHtml ? (
-                <div dangerouslySetInnerHTML={{ __html: codeHtml }} />
-              ) : (
-                <pre>
-                  <code>{code}</code>
-                </pre>
-              )}
-            </div>
+          <TabsContent value="code">
+            <CodeBlock code={code} lang="tsx" />
           </TabsContent>
         </CardContent>
       </Tabs>

@@ -25,7 +25,7 @@ export function DocPage({ href, children }: DocPageProps) {
   const next = DOCS_LINKS[index + 1];
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-6 py-10 lg:px-10">
+    <article className="w-full max-w-3xl py-10 md:pl-10">
       <div className="mb-6 flex items-center gap-2 md:hidden">
         <SidebarTrigger />
         <span className="text-sm text-muted-foreground">Menu</span>

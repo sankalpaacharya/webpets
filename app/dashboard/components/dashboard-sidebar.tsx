@@ -2,51 +2,48 @@
 
 import Image from "next/image";
 
-import { Button } from "@/components/ui/8bit/button";
+import { Button } from "@/components/ui/button";
 import type { MediaAnimalWithVariants } from "@/lib/types";
 
-type AnimalSidebarProps = {
+type AnimalListProps = {
   animals: MediaAnimalWithVariants[];
   selectedAnimalName: string;
   onSelect: (name: string) => void;
 };
 
-export function AnimalSidebar({
+export function AnimalList({
   animals,
   selectedAnimalName,
   onSelect,
-}: AnimalSidebarProps) {
+}: AnimalListProps) {
   return (
-    <aside className="dashboard-enter flex max-h-[calc(100vh-180px)] flex-col gap-4 overflow-y-auto pr-4">
-      {animals.map((animal, index) => {
+    <nav
+      aria-label="Animals"
+      className="flex max-h-[calc(100svh-12rem)] flex-col gap-0.5 overflow-y-auto pr-2 lg:sticky lg:top-24"
+    >
+      {animals.map((animal) => {
         const isSelected = animal.name === selectedAnimalName;
         return (
           <Button
             key={animal.name}
             type="button"
-            variant="ghost"
+            variant={isSelected ? "secondary" : "ghost"}
             onClick={() => onSelect(animal.name)}
             aria-pressed={isSelected}
-            className={`dashboard-card flex w-full items-center justify-start gap-4 px-4 py-4 text-left transition ${
-              isSelected
-                ? "ring-1 ring-blue-400/60 bg-accent text-accent-foreground"
-                : "bg-card text-card-foreground hover:bg-muted"
-            }`}
-            style={{ animationDelay: `${index * 35}ms` }}
+            className="h-9 justify-start gap-2.5 px-2 font-normal"
           >
-            <div className="flex h-8 w-8 items-center justify-center overflow-hidden">
-              <Image
-                src={animal.logoUrl}
-                alt={animal.name}
-                width={32}
-                height={32}
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <div className="text-sm font-semibold">{animal.name}</div>
+            <Image
+              src={animal.logoUrl}
+              alt=""
+              width={20}
+              height={20}
+              unoptimized
+              className="size-5 [image-rendering:pixelated]"
+            />
+            <span className="truncate">{animal.name}</span>
           </Button>
         );
       })}
-    </aside>
+    </nav>
   );
 }

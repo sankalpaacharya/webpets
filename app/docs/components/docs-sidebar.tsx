@@ -12,21 +12,31 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 import { DOCS_NAV } from "../nav";
 
-/** Height of the site navbar, which the sidebar sits beneath. */
-const NAVBAR_OFFSET = "top-16 h-[calc(100svh-4rem)]";
-
+/**
+ * On desktop the sidebar is a sticky column inside the page container so it
+ * lines up with the navbar. On mobile it becomes the off-canvas sheet.
+ */
 export function DocsSidebar() {
   const pathname = usePathname();
+  const { isMobile } = useSidebar();
 
   return (
-    <Sidebar collapsible="offcanvas" className={NAVBAR_OFFSET}>
-      <SidebarContent className="gap-0 py-4">
+    <Sidebar
+      collapsible={isMobile ? "offcanvas" : "none"}
+      className={
+        isMobile
+          ? "top-16 h-[calc(100svh-4rem)]"
+          : "sticky top-16 hidden h-[calc(100svh-4rem)] w-56 shrink-0 border-r border-border md:flex"
+      }
+    >
+      <SidebarContent className="gap-2 py-6 md:pr-4">
         {DOCS_NAV.map((group) => (
-          <SidebarGroup key={group.label}>
+          <SidebarGroup key={group.label} className="px-0">
             <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>

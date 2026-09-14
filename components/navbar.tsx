@@ -12,9 +12,9 @@ export function SiteNavbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
-      <WebPet animal="deno" color="green" followMouse={true} />
-      <WebPet animal="dog" color="red" />
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-6 py-4">
+      <WebPet animal="deno" color="green" followMouse zIndex={0} />
+      <WebPet animal="dog" color="red" zIndex={0} />
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center gap-4 px-6 py-4">
         <div className="flex items-center gap-3">
           <Link
             href="/"
