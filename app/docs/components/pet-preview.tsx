@@ -20,7 +20,7 @@ export function PetPreview({ pet, code }: PetPreviewProps) {
       </TabsList>
       <TabsContent value="preview" className="mt-3">
         <div
-          className="relative h-64 overflow-hidden rounded-lg border border-border"
+          className="relative isolate h-64 overflow-hidden rounded-lg border border-border"
           style={{
             backgroundImage: "url('/media/background/house.png')",
             backgroundPosition: "center bottom",

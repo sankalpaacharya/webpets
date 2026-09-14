@@ -143,7 +143,7 @@ export function CodeBlock({
             <CodeBlockCopyButton />
           </div>
         )}
-        <div className="overflow-auto p-3 font-mono [&_.shiki]:whitespace-pre-wrap [&_.shiki]:break-words [&_.shiki]:m-0 [&_.shiki>code]:whitespace-pre-wrap [&_.shiki>code]:break-words [&>pre]:whitespace-pre-wrap [&>pre]:break-words [&>pre]:m-0">
+        <div className={cn("overflow-auto p-3 font-mono  [&_.shiki]:whitespace-pre-wrap [&_.shiki]:break-words [&_.shiki]:m-0 [&_.shiki>code]:whitespace-pre-wrap [&_.shiki>code]:break-words [&>pre]:whitespace-pre-wrap [&>pre]:break-words [&>pre]:m-0", !header && !title && "pr-12")}>
           {html == null ? (
             <pre>
               <code>{code}</code>

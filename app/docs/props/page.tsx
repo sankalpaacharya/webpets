@@ -1,10 +1,27 @@
 import type { Metadata } from "next";
 
+import { CodeBlock } from "@/components/code-block";
+
 import { DocPage } from "../components/doc-page";
-import { PropsTable } from "../components/doc-primitives";
+import { Note, PropsTable, Section } from "../components/doc-primitives";
 import type { PropRow } from "../components/doc-primitives";
 
 export const metadata: Metadata = { title: "Props" };
+
+const SIGNATURE = `type WebPetProps = {
+  animal: string;
+  color?: string;
+  position?: "fixed" | "absolute";
+  speed?: number;
+  scale?: number;
+  followMouse?: boolean;
+  hoverMessage?: string;
+  speech?: { maxWidth?: number; offsetY?: number };
+  mediaBaseUrl?: string;
+  zIndex?: number;
+  style?: CSSProperties;
+  behavior?: Partial<PetBehavior>;
+};`;
 
 const PROPS: PropRow[] = [
   { name: "animal", type: "string", description: "Folder name under media." },
@@ -24,7 +41,13 @@ const PROPS: PropRow[] = [
 export default function PropsPage() {
   return (
     <DocPage href="/docs/props">
-      <PropsTable rows={PROPS} />
+      <Section id="signature" title="Signature">
+        <Note>Only <code className="font-mono">animal</code> is required. Everything else has a sensible default.</Note>
+        <CodeBlock code={SIGNATURE} lang="tsx" title="components/web-pet.tsx" />
+      </Section>
+      <Section id="reference" title="Reference">
+        <PropsTable rows={PROPS} />
+      </Section>
     </DocPage>
   );
 }

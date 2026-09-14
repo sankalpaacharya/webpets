@@ -53,7 +53,7 @@ export function DocPage({ href, children }: DocPageProps) {
           <p className="text-base text-muted-foreground">{link.description}</p>
         </header>
 
-        <div className="mt-10 space-y-12">{children}</div>
+        <div className="mt-8 space-y-10">{children}</div>
 
         <Separator className="my-12" />
 

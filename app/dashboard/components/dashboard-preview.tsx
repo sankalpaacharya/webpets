@@ -46,7 +46,7 @@ export function PreviewPanel(props: PreviewPanelProps) {
         <CardContent className="p-4">
           <TabsContent value="preview">
             <div
-              className="relative h-72 overflow-hidden rounded-md border border-border"
+              className="relative isolate h-72 overflow-hidden rounded-md border border-border"
               style={{
                 backgroundImage: "url('/media/background/house.png')",
                 backgroundPosition: "center bottom",
